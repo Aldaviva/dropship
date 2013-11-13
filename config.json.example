@@ -1,0 +1,39 @@
+{
+	"projects": [
+		{
+			"id": "catalyst",
+			"scmUrl": "http://git.bluejeansnet.com/ben/catalyst/",
+			"ciUrl": "http://build.bluejeansnet.com:8080/job/Catalyst/",
+			"components": [
+				{
+					"id": "storm",
+					"package": "vc.bjn.catalyst$storm",
+					"fileNamePattern": "\\.war$",
+					"destinationHost": "storm",
+					"destinationPath": "/opt/jetty/webapps/storm.war",
+					"preDeployCommand": null,
+					"postDeployCommand": "touch /opt/jetty/contexts/storm.xml"
+				},
+				{
+					"id": "sleepercell",
+					"package": "vc.bjn.catalyst$sleepercell",
+					"fileNamePattern": "-jar-with-dependencies\\.jar$",
+					"destinationHost": "sleepercell",
+					"destinationPath": "/opt/sleepercell/sleepercell.jar",
+					"preDeployCommand": null,
+					"postDeployCommand": "service sleepercell restart"
+				},
+				{
+					"id": "storm-docs",
+					"package": "vc.bjn.catalyst$storm",
+					"fileNamePattern": "-rest-api-docs\\.jar$",
+					"destinationHost": "storm",
+					"destinationPath": "/opt/jetty/webapps/storm-doc-content.war",
+					"preDeployCommand": null,
+					"postDeployCommand": "touch /opt/jetty/contexts/storm-doc-content.xml"
+				}
+			]
+		}
+	],
+	"httpPort": 8084
+}

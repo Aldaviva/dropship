@@ -1,0 +1,15 @@
+{
+	"name": "dropship",
+	"author": "Ben Hutchison <ben@bluejeans.com>",
+	"version": "0.0.1",
+	"dependencies": {
+		"bunyan"      : "0.22.0",
+		"lodash"      : "2.3.0",
+		"mediator-js" : "0.9.6",
+		"pty.js"      : "niallo/pty.js",
+		"q"           : "0.9.7",
+		"restify"     : "2.6.0",
+		"socket.io"   : "0.9.16",
+		"temp"        : "0.6.0"
+	}
+}
