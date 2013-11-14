@@ -1,0 +1,12 @@
+{
+	"name": "dropship",
+	"version": "0.0.1",
+	"main": "index.js",
+	"dependencies": {
+		"backbone"    : "1.1.0",
+		"jquery"      : "2.0.3",
+		"lodash"      : "2.3.0",
+		"mediator-js" :"0.9.6",
+		"momentjs"    : "2.4.0"
+	}
+}

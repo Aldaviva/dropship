@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{{projectId}} | Dropship</title>
+	</head>
+
+	<body>
+		<div class="loading">loading</div>
+		
+		<div class="project" style="display: none">
+			<input id="deployButton" type="button" />
+			
+			<div class="details">
+				<div class="build">
+					<span class="time">
+						built
+						<span class="value" title="" data-millis=""></span>
+					</span>
+
+					<span class="author">
+						by
+						<span class="value"></span>
+					</span>
+
+					<div class="message"></div>
+				</div>
+
+				<div class="progress">
+					<!--<div class="componentStep" data-state="complete">pre-deploy sleepercell</div>
+					<div class="componentStep" data-state="complete">upload sleepercell</div>
+					<div class="componentStep" data-state="complete">post-deploy sleepercell</div>
+					<div class="componentStep" data-state="complete">pre-deploy storm</div>
+					<div class="componentStep" data-state="progress">upload storm (25%)</div>-->
+				</div>
+			</div>
+
+			<a href="" class="reload">reload</a>
+		</div>
+
+		<script src="/scripts/lib/momentjs/min/moment.min.js"></script>
+		<script src="/scripts/lib/mediator-js/mediator.min.js"></script>
+		<script src="/scripts/lib/lodash/dist/lodash.min.js"></script>
+		<script src="/scripts/lib/backbone/backbone-min.js"></script>
+		<script src="/scripts/lib/jquery/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			window.projectId = "{{projectId}}";
+		</script>
+		<script src="/scripts/main.js"></script>
+	</body>
+</html>

@@ -3,13 +3,21 @@
 	"author": "Ben Hutchison <ben@bluejeans.com>",
 	"version": "0.0.1",
 	"dependencies": {
-		"bunyan"      : "0.22.0",
-		"lodash"      : "2.3.0",
-		"mediator-js" : "0.9.6",
-		"pty.js"      : "niallo/pty.js",
-		"q"           : "0.9.7",
-		"restify"     : "2.6.0",
-		"socket.io"   : "0.9.16",
-		"temp"        : "0.6.0"
+		"bunyan"          : "0.22.0",
+		"express"         : "3.4.4",
+		"express-slash"   : "0.2.1",
+		"hbs"             : "2.4.0",
+		"less-middleware" : "0.1.13",
+		"lodash"          : "2.3.0",
+		"mediator-js"     : "0.9.6",
+		"pty.js"          : "git://github.com/niallo/pty.js.git#4e0de928f30d0408541572076de4d5cb29a6a19a",
+		"q"               : "0.9.7",
+		"restify"         : "2.6.0",
+		"socket.io"       : "0.9.16",
+		"temp"            : "0.6.0"
+	},
+	"devDependencies": {
+		"browserify" : "2.35.2",
+		"bower"      : "1.2.7"
 	}
 }
