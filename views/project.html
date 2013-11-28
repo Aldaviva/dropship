@@ -3,13 +3,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>{{projectId}} | Dropship</title>
+		<link href="/styles/project.css" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body>
 		<div class="loading">loading</div>
 		
 		<div class="project" style="display: none">
-			<input id="deployButton" type="button" />
+			<button id="deployButton"></button>
 			
 			<div class="details">
 				<div class="build">
@@ -23,15 +24,23 @@
 						<span class="value"></span>
 					</span>
 
-					<div class="message"></div>
+					<a class="message" target="gitlab" title="View commit"></a>
 				</div>
 
-				<div class="progress">
-					<!--<div class="componentStep" data-state="complete">pre-deploy sleepercell</div>
-					<div class="componentStep" data-state="complete">upload sleepercell</div>
-					<div class="componentStep" data-state="complete">post-deploy sleepercell</div>
-					<div class="componentStep" data-state="complete">pre-deploy storm</div>
-					<div class="componentStep" data-state="progress">upload storm (25%)</div>-->
+				<div class="log">
+					<!--<div class="complete">deploying catalyst</div>
+		            <div class="complete">download storm</div>
+		            <div class="complete">predeploy storm</div>
+		            <div class="complete">upload storm</div>
+		            <div class="complete">postdeploy storm</div>
+		            <div class="complete">download sleepercell</div>
+		            <div class="complete">predeploy sleepercell</div>
+		            <div class="complete">upload sleepercell</div>-->
+		            <!--<div class="complete">postdeploy sleepercell</div>
+		            <div class="progress">download storm-docs</div>
+		            <div class="error">predeploy storm-docs</div>logEl
+		            <div class="start">upload storm-docs</div>
+		            <div class="complete all">postdeploy storm-docs</div>-->
 				</div>
 			</div>
 

@@ -3,22 +3,49 @@ var componentStepEls = {
 	// "project:component:step": el
 };
 
-var project = null;
-setLayout("idle");
+var REFRESH_FREQUENCY = 5*1000;
+var STEP_LABELS = {
+	preDeploy: 'preparing',
+	download: 'fetching',
+	upload: 'uploading',
+	postDeploy: 'finalizing'
+};
 
-$.getJSON('/api/projects/'+projectId)
-	.done(function(data){
-		project = data;
-		initProject();
-	});
+var project = null;
+
+fetchProjectData().done(function(data){
+	initProject();
+});
+
+//FIXME testing
+// setInterval(function(){
+// 	if(project.deployState != 'in progress'){
+// 		fetchProjectData().done(function(data){
+// 			if(project.deployState != 'in progress'){
+// 				renderProject();
+// 			}
+// 		});
+// 	}
+// }, REFRESH_FREQUENCY);
 
 $('#deployButton').click(function(event){
 	event.preventDefault();
 	$.post('/api/projects/'+projectId+'/deploy');
 	project.deployState = 'in progress';
-	setLayout('deploying');
+	$('.log').empty();
 	renderProject();
 });
+
+$('.project .reload').attr('title', 'Refresh\n(Auto-refreshes every '+Math.round(REFRESH_FREQUENCY/1000)+' seconds)');
+
+
+function fetchProjectData(){
+	return $.getJSON('/api/projects/'+projectId)
+		.done(function(data){
+			project = data;
+			return data;
+		});
+}
 
 function initProject(){
 	$('.loading').hide();
@@ -26,56 +53,53 @@ function initProject(){
 	renderProject();
 
 	mediator.subscribe('deploy:'+project.id+':start:_all', function(body, channel){
-		$('.progress').empty();
+		$('.log').empty();
 		project.deployState = "in progress";
 		renderProject();
 	});
 
 	mediator.subscribe('deploy:'+project.id+':complete:_all', function(body){
 		project.deployState = "complete";
-		setLayout('idle');
 		componentStepEls = {};
-		renderProject();
+		renderProject(); //FIXME testing step styling
 	});
 
 	mediator.subscribe('deploy:'+project.id+':error', function(body, channel){
 		project.deployState = 'failed';
 		renderProject();
+		// renderStep(project.id, body.componentId, body.step, 'error message', body);
 	});
 
 	mediator.subscribe('deploy:'+project.id, function(body, channel){
-		renderStep(project.id, body.componentId, body.step, body.event, body.progress);
-		setLayout('deploying');
-	}, { predicate: function(body){
+		renderStep(project.id, body.componentId, body.step, body.event, body);
+		if(project.deployState != 'complete' && project.deployState != 'failed'){
+			project.deployState = 'in progress';
+		}
+		renderProject();
+	}/*, { predicate: function(body){
 		return (body.componentId != '_all') || (body.event != 'complete');
-	}});
+	}}*/);
 }
 
 function renderProject(){
-	$('.build .time .value').text(new Date(project.build.endTime));
-	$('.build .author .value').text(project.build.commit.author);
-	$('.build .message').text(project.build.commit.message);
-
-	renderDeployButton();
-}
-
-function setLayout(mode){
+	var buildMoment = moment(project.build.endTime);
 	var projectEl = $('.project');
 	var buildEl = projectEl.find('.build');
-	var progressEl = projectEl.find('.progress');
-	var currentMode = projectEl.hasClass('deploying') ? 'deploying' : 'idle';
 
-	if(currentMode != mode){
-		if(mode == "idle") {
-			buildEl.show();
-			progressEl.hide();
-			projectEl.removeClass('deploying');
-		} else if(mode == "deploying") {
-			buildEl.hide();
-			progressEl.show();
-			projectEl.addClass('deploying');
-		}
-	}
+	buildEl.find('.time .value')
+		.text(buildMoment.fromNow())
+		.attr({ title: buildMoment.format(), 'data-millis': buildMoment.valueOf() })
+	buildEl.find('.author').toggle(!!project.build.commit.author)
+		.find('.value').text(project.build.commit.author);
+	buildEl.find('.message')
+		.text(project.build.commit.message)
+		.attr('href', project.build.commit.url);
+
+	projectEl
+		.toggleClass('deploying', (project.deployState == 'in progress'))
+		.toggleClass('done', (project.deployState == 'complete' || project.deployState == 'failed'));
+
+	renderDeployButton();
 }
 
 function renderDeployButton(){
@@ -88,11 +112,11 @@ function renderDeployButton(){
 	var disabledAttrValue = "disabled";
 	var labelText = "";
 
-	if(project.deployState == 'error'){
+	if(deployState == 'error'){
 		cssClass = "error";
 		labelText = "Deploy failed";
 		disabledAttrValue = "";
-	} else if(project.deployState == 'in progress'){
+	} else if(deployState == 'in progress'){
 		cssClass = "unavailable";
 		labelText = "Deploying\u2026";
 	} else if(buildState == 'failure' || buildState == 'unstable'){
@@ -104,6 +128,12 @@ function renderDeployButton(){
 	} else if(buildState == 'in progress'){
 		cssClass = "unavailable";
 		labelText = "Building\u2026";
+	} else if(deployState == 'complete'){
+		cssClass = "success";
+		labelText = 'Deployed';
+	} else if(deployState == 'failed'){
+		cssClass = 'error';
+		labelText = 'Deploy Failed';
 	} else {
 		cssClass = "";
 		labelText = "Deploy";
@@ -112,33 +142,43 @@ function renderDeployButton(){
 
 	deployButton
 		.attr({
-			"value": labelText,
 			"class": cssClass,
 			"disabled": disabledAttrValue
-		});
+		})
+		.text(labelText);
 }
 
-function renderStep(projectId, componentId, step, event, progress){
+function renderStep(projectId, componentId, step, event, body){
 	var elementKey = [projectId, componentId, step].join(":");
 	var el = componentStepEls[elementKey];
 	var message;
+
 	if(componentId == '_all'){
 		if(event == 'start'){
-			message = "Deploying "+projectId;
+			message = "deploying "+projectId;
 		} else if(event == 'complete'){
-			message = "Successfully deployed "+projectId;
+			message = "deployed "+projectId;
 		}
 	} else {
-		message = step + " " + componentId + (progress ? ' (' + Math.floor(progress*100) + '%)' : '');
+		message = STEP_LABELS[step] + " " + componentId;
+		if(body.progress){
+			message += ' (' + Math.floor(body.progress*100) + '%)';
+		}
 	}
 
 	if(event == 'start' || !el){
 		el = $('<div>');
-		$('.project .details .progress').append(el);
+		var logEl = $('.project .details .log');
+		logEl.append(el);
 		componentStepEls[elementKey] = el;
 	}
 
-	var cssClass = (event == 'start' && componentId == '_all') ? 'complete' : event;
+	if(event == 'error'){
+		el.after($('<div>', { 'class': 'error message', text: body.error }));
+	}
+
+	var cssClass = (componentId == '_all') ? 'all '+event : event;
+	// var cssClass = (event == 'start' && componentId == '_all') ? 'all' : event;
 
 	el.text(message).attr("class", cssClass);
 }
@@ -150,4 +190,25 @@ socket.on('deploy', function(message){
 });
 socket.on('error', function(err){
 	console.error(err);
+});
+
+moment.lang('en-short', {
+	relativeTime: {
+		future : 'in %s',
+		past   : function(token){
+			var suffix = ' ago';
+			return token + ((token == 'just now') ? '' : suffix);
+		},
+		s      : "just now",
+		m      : '1 min.',
+		mm     : '%d min.',
+		h      : '1 hour',
+		hh     : '%d hours',
+		d      : '1 day',
+		dd     : '%d days',
+		M      : '1 month',
+		MM     : '%d months',
+		y      : '1 year',
+		yy     : '%d years'
+	}
 });

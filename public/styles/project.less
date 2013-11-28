@@ -1,0 +1,174 @@
+@import "common.less";
+
+.project {
+
+	border              : 1px solid @medium_gray;
+	border-bottom-width : 2px;
+	border-radius       : 5px;
+	font                : 10px Verdana, sans-serif;
+	max-width           : 177px;
+	height              : 106px;
+	padding             : 5px;
+	position            : relative;
+
+	&.deploying, &.done {
+		.details .build {
+			display: none;
+		}
+
+		.details .log {
+			display: block;
+		}
+	}
+
+	&.deploying {
+		.reload {
+			display: none;
+		}
+	}
+
+	&.done {
+		.reload {
+			display: inline;
+		}
+	}
+
+	#deployButton {
+		background     : url('../images/deploy-button-green.png') no-repeat,
+                         url('../images/deploy-button-green-hover.png') no-repeat -9999px,
+                         url('../images/deploy-button-red.png') no-repeat -9999px,
+                         url('../images/deploy-button-green-disabled.png') no-repeat -9999px,
+                         url('../images/deploy-button-gray.png') no-repeat -9999px;
+		border         : none;
+		color          : white;
+		cursor         : pointer;
+		display        : block;
+		font           : 16px "Verlag Black";
+		height         : 32px;
+		text-shadow    : 0 1px 0px rgba(0,0,0,0.15);
+		text-transform : uppercase;
+		width          : 100%;
+
+		&:hover {
+			background-image: url('../images/deploy-button-green-hover.png');
+		}
+
+		&.error {
+			background: url('../images/deploy-button-red.png');
+			border: 2px solid @dark_red;
+			border-radius: 3px;
+			cursor: default;
+		}
+
+		&.unavailable {
+			background: url('../images/deploy-button-gray.png');
+			border: 2px solid #666666;
+			border-radius: 3px;
+			cursor: default;
+		}
+
+		&.success {
+			background: url('../images/deploy-button-green-disabled.png');
+			border: 2px solid #48a237;
+			border-radius: 3px;
+			cursor: default;
+		}
+	}
+
+	.details {
+		margin: 1px 3px 2px;
+
+		.build {
+			margin-top: 7px;
+
+			.time, .author {
+				color: @light_text;
+
+				.value {
+					color: @dark_text;
+				}
+			}
+
+			.time {
+				margin-left: 2px;
+			}
+
+			.author {
+				float: right;
+				margin-right: 2px;
+			}
+
+			.message {
+				border-top      : 1px solid @light_gray;
+				color           : @light_text;
+				display         : block;
+				font-style      : italic;
+				line-height     : 13px;
+				margin-top      : 6px;
+				padding         : 7px 2px 0;
+				text-decoration : none;
+				white-space     : pre-line;
+
+				&:hover {
+					color: @dark_text;
+				}
+			}
+		}
+
+		.log {
+			display: none;
+			max-height: 66px;
+			color: @dark_text;
+			margin: 6px 1px 0;
+			overflow: hidden;
+
+			> div {
+				line-height: 13px;
+				display: none;
+
+				&:nth-last-child(1),
+				&:nth-last-child(2),
+				&:nth-last-child(3),
+				&:nth-last-child(4),
+				&:nth-last-child(5){
+					display: block;
+				}
+			}
+
+			.complete {
+				color: @light_text;
+				background: url('../images/check-green.png') no-repeat right center;
+
+				&.all {
+					color: @green;
+				}
+			}
+
+			.all.start {
+				color: @light_text;
+			}
+
+			.error {
+				color: @dark_red;
+				background: url('../images/x-red.png') no-repeat right center;
+			}
+		}
+	}
+
+	.reload {
+		background        : url('../images/reload-button-black.png') no-repeat;
+		background-origin : content-box;
+		bottom            : 0;
+		height            : 7px;
+		opacity           : 0.33;
+		padding           : 2px;
+		position          : absolute;
+		right             : 0;
+		text-indent       : -9999px;
+		width             : 7px;
+
+		&:hover {
+			opacity: 0.6;
+		}
+	}
+}

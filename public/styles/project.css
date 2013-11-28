@@ -1,0 +1,283 @@
+/*
+YUI 2: Reset CSS
+Copyright (c) 2011, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.9.0
+*/
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+select,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+address,
+button,
+caption,
+cite,
+code,
+dfn,
+em,
+input,
+optgroup,
+option,
+select,
+strong,
+textarea,
+th,
+var {
+  font: inherit;
+}
+del,
+ins {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+caption,
+th {
+  text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q:before,
+q:after {
+  content: '';
+}
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
+}
+sup {
+  vertical-align: baseline;
+}
+sub {
+  vertical-align: baseline;
+}
+legend {
+  color: #000000;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner,
+a::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input:-moz-ui-invalid {
+  box-shadow: none;
+}
+textarea:focus,
+input:focus {
+  outline: none;
+}
+/*@font-face {
+	font-family: "Knockout 31";
+	src: url('../fonts/Knockout-31-1.woff') format('woff');
+}*/
+@font-face {
+  font-family: "Verlag Black";
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/verlag-black.eot');
+  src: url('../fonts/verlag-black.eot?#iefix') format('embedded-opentype'), url('../fonts/verlag-black.woff') format('woff'), url('../fonts/verlag-black.ttf') format('truetype'), url('../fonts/verlag-black.svg#verlagblack') format('svg');
+}
+/**
+ * DOES NOT WORK WITH LESSCSS 1.3.0 (works on 1.2.1)
+ * Named mixin parameters were added, which has the side effect of varargs mixin definitions with no explicit arguments (like the one below) never matching the mixin invocations.
+ *
+ * arguments are of the form
+ * <property>, <duration> [, <property>, <duration> ...]
+ */
+.project {
+  border: 1px solid #c9c9c9;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  font: 10px Verdana, sans-serif;
+  max-width: 177px;
+  height: 106px;
+  padding: 5px;
+  position: relative;
+}
+.project.deploying .details .build,
+.project.done .details .build {
+  display: none;
+}
+.project.deploying .details .log,
+.project.done .details .log {
+  display: block;
+}
+.project.deploying .reload {
+  display: none;
+}
+.project.done .reload {
+  display: inline;
+}
+.project #deployButton {
+  background: url('../images/deploy-button-green.png') no-repeat, url('../images/deploy-button-green-hover.png') no-repeat -9999px, url('../images/deploy-button-red.png') no-repeat -9999px, url('../images/deploy-button-green-disabled.png') no-repeat -9999px, url('../images/deploy-button-gray.png') no-repeat -9999px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font: 16px "Verlag Black";
+  height: 32px;
+  text-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  width: 100%;
+}
+.project #deployButton:hover {
+  background-image: url('../images/deploy-button-green-hover.png');
+}
+.project #deployButton.error {
+  background: url('../images/deploy-button-red.png');
+  border: 2px solid #cd0000;
+  border-radius: 3px;
+  cursor: default;
+}
+.project #deployButton.unavailable {
+  background: url('../images/deploy-button-gray.png');
+  border: 2px solid #666666;
+  border-radius: 3px;
+  cursor: default;
+}
+.project #deployButton.success {
+  background: url('../images/deploy-button-green-disabled.png');
+  border: 2px solid #48a237;
+  border-radius: 3px;
+  cursor: default;
+}
+.project .details {
+  margin: 1px 3px 2px;
+}
+.project .details .build {
+  margin-top: 7px;
+}
+.project .details .build .time,
+.project .details .build .author {
+  color: #a3a3a3;
+}
+.project .details .build .time .value,
+.project .details .build .author .value {
+  color: #676767;
+}
+.project .details .build .time {
+  margin-left: 2px;
+}
+.project .details .build .author {
+  float: right;
+  margin-right: 2px;
+}
+.project .details .build .message {
+  border-top: 1px solid #e5e5e5;
+  color: #a3a3a3;
+  display: block;
+  font-style: italic;
+  line-height: 13px;
+  margin-top: 6px;
+  padding: 7px 2px 0;
+  text-decoration: none;
+  white-space: pre-line;
+}
+.project .details .build .message:hover {
+  color: #676767;
+}
+.project .details .log {
+  display: none;
+  max-height: 66px;
+  color: #676767;
+  margin: 6px 1px 0;
+  overflow: hidden;
+}
+.project .details .log > div {
+  line-height: 13px;
+  display: none;
+}
+.project .details .log > div:nth-last-child(1),
+.project .details .log > div:nth-last-child(2),
+.project .details .log > div:nth-last-child(3),
+.project .details .log > div:nth-last-child(4),
+.project .details .log > div:nth-last-child(5) {
+  display: block;
+}
+.project .details .log .complete {
+  color: #a3a3a3;
+  background: url('../images/check-green.png') no-repeat right center;
+}
+.project .details .log .complete.all {
+  color: #5aca45;
+}
+.project .details .log .all.start {
+  color: #a3a3a3;
+}
+.project .details .log .error {
+  color: #cd0000;
+  background: url('../images/x-red.png') no-repeat right center;
+}
+.project .reload {
+  background: url('../images/reload-button-black.png') no-repeat;
+  background-origin: content-box;
+  bottom: 0;
+  height: 7px;
+  opacity: 0.33;
+  padding: 2px;
+  position: absolute;
+  right: 0;
+  text-indent: -9999px;
+  width: 7px;
+}
+.project .reload:hover {
+  opacity: 0.6;
+}
