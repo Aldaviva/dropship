@@ -17,16 +17,15 @@ fetchProjectData().done(function(data){
 	initProject();
 });
 
-//FIXME testing
-// setInterval(function(){
-// 	if(project.deployState != 'in progress'){
-// 		fetchProjectData().done(function(data){
-// 			if(project.deployState != 'in progress'){
-// 				renderProject();
-// 			}
-// 		});
-// 	}
-// }, REFRESH_FREQUENCY);
+setInterval(function(){
+	if(project.deployState != 'in progress'){
+		fetchProjectData().done(function(data){
+			if(project.deployState != 'in progress'){
+				renderProject();
+			}
+		});
+	}
+}, REFRESH_FREQUENCY);
 
 $('#deployButton').click(function(event){
 	event.preventDefault();
@@ -61,13 +60,12 @@ function initProject(){
 	mediator.subscribe('deploy:'+project.id+':complete:_all', function(body){
 		project.deployState = "complete";
 		componentStepEls = {};
-		renderProject(); //FIXME testing step styling
+		renderProject();
 	});
 
 	mediator.subscribe('deploy:'+project.id+':error', function(body, channel){
 		project.deployState = 'failed';
 		renderProject();
-		// renderStep(project.id, body.componentId, body.step, 'error message', body);
 	});
 
 	mediator.subscribe('deploy:'+project.id, function(body, channel){
@@ -76,9 +74,7 @@ function initProject(){
 			project.deployState = 'in progress';
 		}
 		renderProject();
-	}/*, { predicate: function(body){
-		return (body.componentId != '_all') || (body.event != 'complete');
-	}}*/);
+	});
 }
 
 function renderProject(){
@@ -178,7 +174,6 @@ function renderStep(projectId, componentId, step, event, body){
 	}
 
 	var cssClass = (componentId == '_all') ? 'all '+event : event;
-	// var cssClass = (event == 'start' && componentId == '_all') ? 'all' : event;
 
 	el.text(message).attr("class", cssClass);
 }
