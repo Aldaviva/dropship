@@ -18,9 +18,9 @@ fetchProjectData().done(function(data){
 });
 
 setInterval(function(){
-	if(project.deployState != 'in progress'){
+	if(!project.deployState){
 		fetchProjectData().done(function(data){
-			if(project.deployState != 'in progress'){
+			if(!project.deployState){
 				renderProject();
 			}
 		});
