@@ -10,7 +10,7 @@
 		"less-middleware" : "0.1.13",
 		"lodash"          : "2.3.0",
 		"mediator-js"     : "0.9.6",
-		"pty.js"          : "git://github.com/niallo/pty.js.git#4e0de928f30d0408541572076de4d5cb29a6a19a",
+		"pty.js"          : "0.2.3",
 		"q"               : "0.9.7",
 		"restify"         : "2.6.0",
 		"socket.io"       : "0.9.16",
