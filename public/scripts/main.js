@@ -110,11 +110,11 @@ function renderDeployButton(){
 
 	if(deployState == 'error'){
 		cssClass = "error";
-		labelText = "Deploy failed";
+		labelText = "Shipping failed";
 		disabledAttrValue = "";
 	} else if(deployState == 'in progress'){
 		cssClass = "unavailable";
-		labelText = "Deploying\u2026";
+		labelText = "Shipping\u2026";
 	} else if(buildState == 'failure' || buildState == 'unstable'){
 		cssClass = "error";
 		labelText = "Build broken";
@@ -126,13 +126,13 @@ function renderDeployButton(){
 		labelText = "Building\u2026";
 	} else if(deployState == 'complete'){
 		cssClass = "success";
-		labelText = 'Deployed';
+		labelText = 'Shipped';
 	} else if(deployState == 'failed'){
 		cssClass = 'error';
-		labelText = 'Deploy Failed';
+		labelText = 'Shipping failed';
 	} else {
 		cssClass = "";
-		labelText = "Deploy";
+		labelText = "Ship it";
 		disabledAttrValue = null;
 	}
 
