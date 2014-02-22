@@ -1,7 +1,7 @@
 {
 	"name": "dropship",
 	"author": "Ben Hutchison <ben@bluejeans.com>",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"dependencies": {
 		"bunyan"          : "0.22.0",
 		"express"         : "3.4.4",
