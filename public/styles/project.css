@@ -227,6 +227,8 @@ input:focus {
   font-style: italic;
   line-height: 13px;
   margin-top: 6px;
+  max-height: 40px;
+  overflow: hidden;
   padding: 7px 2px 0;
   text-decoration: none;
   white-space: pre-line;

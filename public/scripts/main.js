@@ -84,12 +84,18 @@ function renderProject(){
 
 	buildEl.find('.time .value')
 		.text(buildMoment.fromNow())
-		.attr({ title: buildMoment.format(), 'data-millis': buildMoment.valueOf() })
+		.attr({
+			title: buildMoment.format(),
+			'data-millis': buildMoment.valueOf()
+		});
 	buildEl.find('.author').toggle(!!project.build.commit.author)
 		.find('.value').text(project.build.commit.author);
 	buildEl.find('.message')
 		.text(project.build.commit.message)
-		.attr('href', project.build.commit.url);
+		.attr({
+			href: project.build.commit.url,
+			title: project.build.commit.message
+		});
 
 	projectEl
 		.toggleClass('deploying', (project.deployState == 'in progress'))

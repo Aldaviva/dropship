@@ -3,7 +3,11 @@
 		{
 			"id": "catalyst",
 			"scmUrl": "http://git.bluejeansnet.com/ben/catalyst/",
-			"ciUrl": "http://build.bluejeansnet.com:8080/job/Catalyst/",
+			"ci": {
+				"url": "http://build.bluejeansnet.com:8080/job/Catalyst/",
+				"username": "",
+				"password": ""
+			},
 			"components": [
 				{
 					"id": "storm",

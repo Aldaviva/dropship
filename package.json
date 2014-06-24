@@ -1,7 +1,7 @@
 {
 	"name": "dropship",
 	"author": "Ben Hutchison <ben@bluejeans.com>",
-	"version": "0.0.3-SNAPSHOT",
+	"version": "0.0.3",
 	"dependencies": {
 		"bunyan"          : "0.22.0",
 		"express"         : "3.4.4",
@@ -10,6 +10,7 @@
 		"less-middleware" : "0.1.13",
 		"lodash"          : "2.3.0",
 		"mediator-js"     : "0.9.6",
+		"pr-request2"     : "git://github.com/aldaviva/pr-request2.git#e714437d0abc58d645028231f095196c4c1ae911",
 		"pty.js"          : "0.2.3",
 		"q"               : "0.9.7",
 		"restify"         : "2.6.0",
